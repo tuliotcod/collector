@@ -1,0 +1,418 @@
+entity CollectorUser {
+
+	username String,
+	email String,
+	password String,
+	name String,
+	lastName String,
+	birthday Instant,
+	gender Integer,
+	//address Address
+	creationDate Instant,
+	lastUpdate Instant
+	
+}
+
+
+
+entity Address {
+	
+	//country Country,
+	//state State,
+	city String
+
+}
+
+
+
+entity Country {
+	
+	name String
+	
+}
+
+
+entity State {
+	
+	name String,
+	//country Country
+	
+}
+
+
+
+entity Publisher {
+
+	name String,
+	website String,
+	info String maxlength(3500),
+	image ImageBlob,
+	creationDate Instant,
+	lastUpdate Instant
+	
+}
+
+
+
+entity Licensor {
+	
+	name String,
+	//country Country,
+	website String,
+	info String maxlength(3500),
+	image ImageBlob,
+	creationDate Instant,
+	lastUpdate Instant
+	
+}
+
+
+entity Category {
+	
+	desc String
+
+}
+
+entity Genre {
+	
+	desc String
+	
+}
+
+
+entity Status {
+	
+	desc String
+
+}
+
+entity Title {
+
+	name String,
+	serie String,
+	startDate Instant,
+	endDate Instant,
+	//category Category
+	//genre Genre
+	//status Status
+	info String maxlength(500),	
+	creationDate Instant,
+	lastUpdate Instant
+	
+}
+
+
+entity Format {
+	
+	desc String
+
+}
+
+entity Finishing {
+	
+	desc String
+
+}
+
+entity Currency {
+	
+	symbol String,
+	name String,
+	startDate Instant,
+	endDate Instant
+
+}
+
+entity Action {
+	
+	// Adicionou, Editou, Excluiu
+	desc String
+
+}
+
+entity ContributionType {
+	
+	// Título, edição, história, personagens
+	desc String
+
+}
+
+entity Contribution {
+	
+	//user CollectorUser,
+	//action Action,
+	creationDate Instant,	
+	//type ContributionType
+
+}
+
+
+
+entity Issue {
+
+	//title Title,
+	number Long,
+	info String,
+	cover ImageBlob,	
+	//coverCollectorUser CollectorUser,
+	month Integer,
+	year Integer,
+	day Integer,
+	pages Integer,
+	//format Format,
+	//finishing Finishing,
+	sameFormatAllIssues Boolean
+	coverPrice BigDecimal,
+	//currency Currency,
+	//collaborators List<Collaborator>,
+	//histories List<History>,
+	//country Country,
+	//comments List<Comment>,
+	creationDate Instant,
+	lastUpdate Instant
+
+}
+
+entity Comment {
+	
+	//user CollectorUser,
+	date Instant,
+	comment String
+
+}
+
+entity Arc {
+	
+	name String,
+	info String maxlength(2500),
+	creationDate Instant,
+	lastUpdate Instant
+
+}
+
+entity Team {
+
+	name String,
+	originalName String,
+	//country Country,
+	//licensor Licensor,
+	bio String maxlength(5000),
+	creationDate Instant,
+	lastUpdate Instant
+
+	
+}
+
+
+entity Personage {
+	
+	name String,
+	lastName String,
+	codeName String,
+	originalName String,
+	//country Country,
+	//licensor Lincensor,
+	bio String maxlength(5000),
+	creationDate Instant,
+	lastUpdate Instant
+
+
+}
+
+entity History {
+
+	order Integer,
+	name String,
+	pages Integer,
+	desc String maxlength(500),
+	//arc Arc,
+	part Integer,
+	//collaborators List<Collaborator>,
+	//characters List<Personage>,
+	//originalIssue Issue,
+	creationDate Instant,
+	lastUpdate Instant
+	
+}
+
+
+
+entity Artist {
+	
+	name String,
+	lastName String,
+	nickname String,
+	//country Country,
+	birthday Instant,
+	dateOfDeath Instant,
+	bio String maxlength(5000),
+	image ImageBlob,
+	creationDate Instant,
+	lastUpdate Instant
+
+
+}
+
+entity Role {
+	// Editor, Arte, Roteiro...
+	desc String
+}
+
+entity Collaborator {
+	
+	//artist Artist,
+	//function Role
+	creationDate Instant,
+	lastUpdate Instant
+}
+
+entity IssueStatus {
+	
+	//Excelente, Ótimo, Muito bom, Bom, Ruim, Muito ruim, Péssimo
+	desc String
+
+}
+
+entity ReadingStatus {
+	
+	// Já li, Lendo, Não li, Relendo, Vou ler, Desistir
+	desc String
+
+}
+
+entity IssueInCollection {
+	
+	//collection Collection,
+	//issue Issue,
+	//issueStatus IssueStatus,
+	price BigDecimal,
+	amount Integer,
+	//readingStatus ReadingStatus,
+	notes String maxlength(75),
+	creationDate Instant,
+	lastUpdate Instant
+
+
+}
+
+entity IssueInWishlist {
+	
+	//wishlist Wishlist,
+	creationDate Instant,
+	lastUpdate Instant
+
+}
+
+
+entity Wishlist {
+	
+	creationDate Instant,
+	lastUpdate Instant,
+	// issues List<IssueInWishlist>
+
+}
+
+entity Collection {
+
+	//user CollectorUser,
+	creationDate Instant,
+	lastUpdate Instant,
+	// issues List<IssueInCollection>
+	
+}
+
+relationship OneToMany {
+	Collection{issues} to IssueInCollection
+}
+
+relationship OneToMany {
+	Wishlist{issues} to IssueInWishlist
+}
+
+
+
+relationship OneToOne {
+	IssueInCollection{issue} to Issue,
+	IssueInCollection{issueStatus} to IssueStatus,
+	IssueInCollection{readingStatus} to ReadingStatus
+}
+
+relationship OneToOne {
+	Collaborator{artist} to Artist,
+	Collaborator{function} to Role
+}
+
+relationship OneToOne {
+	Artist{country} to Country
+}
+
+relationship OneToMany {
+	History{collaborators} to Collaborator,
+	History{characters} to Personage	
+}
+
+relationship OneToOne {
+	History{arc} to Arc,
+	History{originalIssue} to Issue
+}
+
+relationship OneToOne {
+	Personage{country} to Country,
+	Personage{licensor} to Licensor
+}
+
+
+relationship OneToOne {
+	Team{country} to Country,
+	Team{licensor} to Licensor
+}
+
+relationship OneToMany {
+	Issue{collaborators} to Collaborator,
+	Issue{histories} to	History,
+	Issue{comments} to Comment
+}
+
+relationship OneToOne {
+	Issue{title} to Title,
+	Issue{coverCollectorUser} to CollectorUser,
+	Issue{format} to Format,
+	Issue{finishing} to Finishing,
+	Issue{currency} to Currency,
+	Issue{country} to Country
+}
+
+relationship OneToOne {
+	Contribution{type} to ContributionType
+}
+relationship OneToOne {
+	Title{category} to Category,
+	Title{genre} to Genre,
+	Title{status} to Status
+}
+
+relationship OneToOne {
+	State{country} to Country
+}
+
+relationship OneToOne {
+	Address{state} to State,
+	Address{country} to Country
+}
+
+/*relationship OneToOne {
+	CollectorUser{address} to Address
+}*/
+
+// Set pagination options
+paginate Issue with pagination
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+// Set an angular suffix
+angularSuffix * with cl
+
+microservice * with collector
+search * with elasticsearch
