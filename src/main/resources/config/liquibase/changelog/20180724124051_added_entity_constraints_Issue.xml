@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Issue.
+    -->
+    <changeSet id="20180724124051-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="title_id"
+                                 baseTableName="issue"
+                                 constraintName="fk_issue_title_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="title"/>
+
+        <addForeignKeyConstraint baseColumnNames="cover_collector_user_id"
+                                 baseTableName="issue"
+                                 constraintName="fk_issue_cover_collector_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="collector_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="format_id"
+                                 baseTableName="issue"
+                                 constraintName="fk_issue_format_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="format"/>
+
+        <addForeignKeyConstraint baseColumnNames="finishing_id"
+                                 baseTableName="issue"
+                                 constraintName="fk_issue_finishing_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="finishing"/>
+
+        <addForeignKeyConstraint baseColumnNames="currency_id"
+                                 baseTableName="issue"
+                                 constraintName="fk_issue_currency_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="currency"/>
+
+        <addForeignKeyConstraint baseColumnNames="country_id"
+                                 baseTableName="issue"
+                                 constraintName="fk_issue_country_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="country"/>
+
+    </changeSet>
+</databaseChangeLog>

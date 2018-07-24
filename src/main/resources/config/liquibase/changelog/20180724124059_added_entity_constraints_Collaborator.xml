@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Collaborator.
+    -->
+    <changeSet id="20180724124059-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="issue_id"
+                                 baseTableName="collaborator"
+                                 constraintName="fk_collaborator_issue_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="issue"/>
+
+        <addForeignKeyConstraint baseColumnNames="history_id"
+                                 baseTableName="collaborator"
+                                 constraintName="fk_collaborator_history_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="history"/>
+
+        <addForeignKeyConstraint baseColumnNames="artist_id"
+                                 baseTableName="collaborator"
+                                 constraintName="fk_collaborator_artist_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="artist"/>
+
+        <addForeignKeyConstraint baseColumnNames="function_id"
+                                 baseTableName="collaborator"
+                                 constraintName="fk_collaborator_function_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="role"/>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,20 @@
+version: '2'
+services:
+    collector-app:
+        image: collector
+        environment:
+            # - _JAVA_OPTIONS=-Xmx512m -Xms256m
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://collector-mysql:3306/collector?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=collector-elasticsearch:9300
+        ports:
+            - 8080:8080
+    collector-mysql:
+        extends:
+            file: mysql.yml
+            service: collector-mysql
+    collector-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: collector-elasticsearch
